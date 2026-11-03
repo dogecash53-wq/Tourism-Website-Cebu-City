@@ -1,22 +1,42 @@
+/* ==================================================
+   1. FONTS
+   Same families as tourism.cebu.gov.ph
+================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Bowlby+One&family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital@1&family=Playfair+Display:ital,wght@1,500&display=swap");
+
 
 /* ==================================================
-   1. COLOR VARIABLES
+   2. COLOR AND TYPE VARIABLES
 ================================================== */
 
 :root {
-    --blue: #35408f;
-    --navy: #1b2260;
-    --gold: #ffd800;
-    --ink: #1d2033;
-    --soft: #f3f4fa;
-    --line: #dfe2f0;
-    --white: #ffffff;
-    --gray: #666666;
+    /* Core palette */
+    --paper:      #f5f3ef;   /* page background */
+    --paper-deep: #ebe8e1;   /* alternate rows, note boxes */
+    --charcoal:   #1a1a1a;   /* text, dark sections */
+    --terracotta: #c2410c;   /* main accent */
+    --amber:      #f4a823;   /* accent on dark backgrounds */
+    --white:      #ffffff;
+
+    /* Text and lines */
+    --ink:   #1a1a1a;
+    --muted: rgba(26, 26, 26, 0.65);
+    --line:  rgba(26, 26, 26, 0.15);
+
+    /* Fonts */
+    --font-body:     "Inter", "Segoe UI", Arial, sans-serif;
+    --font-heading:  "Inter Tight", "Inter", sans-serif;
+    --font-wordmark: "Bowlby One", "Inter Tight", sans-serif;
+    --font-quote:    "Playfair Display", Georgia, serif;
+    --font-lockup:   "Libre Baskerville", Georgia, serif;
+
+    --radius: 4px;
 }
 
 
 /* ==================================================
-   2. GENERAL RESET
+   3. GENERAL RESET
 ================================================== */
 
 * {
@@ -32,12 +52,12 @@ html {
 body {
     width: 100%;
     min-width: 320px;
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-body);
     color: var(--ink);
     line-height: 1.65;
-    background: var(--white);
+    background: var(--paper);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
     animation: pageLoad 0.8s ease-in;
 }
 
@@ -48,23 +68,28 @@ img {
 }
 
 a {
-    color: var(--blue);
+    color: var(--terracotta);
 }
 
 h1, h2, h3, h4, p {
     overflow-wrap: break-word;
 }
 
+::selection {
+    background: rgba(194, 65, 12, 0.2);
+}
+
 
 /* ==================================================
-   3. TOP BAR
+   4. TOP BAR
 ================================================== */
 
 .topbar {
-    background: var(--navy);
-    color: var(--white);
-    font-size: 0.85rem;
-    padding: 7px 5%;
+    background: var(--charcoal);
+    color: rgba(245, 243, 239, 0.75);
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    padding: 8px 5%;
 
     display: flex;
     justify-content: space-between;
@@ -74,23 +99,27 @@ h1, h2, h3, h4, p {
 }
 
 .topbar a {
-    color: var(--gold);
+    color: var(--amber);
     text-decoration: none;
+}
+
+.topbar a:hover {
+    color: var(--paper);
 }
 
 
 /* ==================================================
-   4. HEADER AND NAVIGATION
+   5. HEADER AND NAVIGATION
+   Paper background, hairline rule, wordmark on the left
 ================================================== */
 
 header.site {
     width: 100%;
-    background: var(--blue);
+    background: var(--paper);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    border-bottom: 4px solid var(--gold);
+    border-bottom: 1px solid var(--line);
 }
 
 .bar {
@@ -107,24 +136,23 @@ header.site {
 }
 
 .brand {
-    color: var(--white);
+    color: var(--charcoal);
     text-decoration: none;
-    font-family: Georgia, serif;
+    font-family: var(--font-wordmark);
     font-size: 1.5rem;
-    font-weight: bold;
-    padding: 12px 0;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 14px 0;
     white-space: nowrap;
 }
 
 .brand span {
-    color: var(--gold);
+    color: var(--terracotta);
 }
 
 nav ul {
     list-style: none;
-    margin: 0;
-    padding: 0;
-
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -135,25 +163,46 @@ nav li {
 }
 
 nav a.n {
+    position: relative;
     display: block;
-    color: var(--white);
+    color: var(--charcoal);
     text-decoration: none;
-    padding: 16px 13px;
+    padding: 20px 13px;
+    font-family: var(--font-heading);
     font-weight: 600;
-    font-size: 14px;
-    transition: 0.3s ease;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.25s ease;
+}
+
+/* Underline slides in on hover and marks the current page */
+nav a.n::after {
+    content: "";
+    position: absolute;
+    left: 13px;
+    right: 13px;
+    bottom: 14px;
+    height: 2px;
+    background: var(--terracotta);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
 }
 
 nav a.n:hover,
 nav a.active {
-    background: var(--gold);
-    color: var(--navy);
-    transform: translateY(-2px);
+    color: var(--terracotta);
+}
+
+nav a.n:hover::after,
+nav a.active::after {
+    transform: scaleX(1);
 }
 
 
 /* ==================================================
-   5. DROPDOWN MENU
+   6. DROPDOWN MENU
 ================================================== */
 
 nav .sub {
@@ -162,16 +211,17 @@ nav .sub {
     top: 100%;
     left: 0;
 
-    min-width: 220px;
-    background: var(--navy);
-    border-top: 3px solid var(--gold);
+    min-width: 230px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--terracotta);
+    border-radius: 0 0 var(--radius) var(--radius);
 
     flex-direction: column;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
     z-index: 1001;
 }
 
-/* Hover dropdown for existing hover-based menus */
 nav li:hover > .sub,
 nav li:focus-within > .sub {
     display: flex;
@@ -179,38 +229,47 @@ nav li:focus-within > .sub {
 
 nav .sub a {
     display: block;
-    color: var(--white);
+    color: var(--charcoal);
     text-decoration: none;
-    padding: 12px 16px;
-    border-bottom: 1px solid #2d3680;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--line);
     font-size: 14px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+nav .sub a:last-child {
+    border-bottom: 0;
 }
 
 nav .sub a:hover {
-    background: var(--gold);
-    color: var(--navy);
+    background: var(--charcoal);
+    color: var(--paper);
 }
 
-a:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 2px;
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--terracotta);
+    outline-offset: 3px;
 }
 
 
 /* ==================================================
-   6. HERO SECTION
+   7. HERO SECTION
+   Full-bleed photo, dark wash, big wordmark headline
 ================================================== */
 
 .hero {
     width: 100%;
-    min-height: 480px;
+    min-height: 82vh;
+    max-height: 100svh;
 
-    background-color: var(--navy);
-
+    background-color: var(--charcoal);
     background-image:
         linear-gradient(
-            rgba(27,34,96,0.65),
-            rgba(27,34,96,0.65)
+            to top,
+            rgba(26, 26, 26, 0.8) 0%,
+            rgba(26, 26, 26, 0.35) 55%,
+            rgba(26, 26, 26, 0.55) 100%
         ),
         url("https://www.goodnewspilipinas.com/wp-content/uploads/2021/02/Basilica-Sto-Nino.jpg");
 
@@ -220,207 +279,257 @@ a:focus-visible {
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: flex-start;
 
-    text-align: left;
-    color: var(--white);
-
-    padding: 80px 8%;
+    color: var(--paper);
+    padding: 80px 8% 90px;
 }
 
 .hero h1 {
-    font-family: Georgia, serif;
-    font-size: clamp(2rem, 5vw, 3.8rem);
-    line-height: 1.15;
-    margin-bottom: 15px;
-    max-width: 750px;
+    font-family: var(--font-wordmark);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 8vw, 6.5rem);
+    line-height: 0.98;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    max-width: 900px;
 
-    animation: fadeIn 1.2s ease-in-out;
+    animation: fadeIn 1.2s ease-out;
 }
 
 .hero p {
     font-size: clamp(1rem, 1.5vw, 1.2rem);
-    max-width: 650px;
-    margin-bottom: 20px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(245, 243, 239, 0.9);
+    max-width: 620px;
+    margin-bottom: 24px;
 
-    animation: fadeIn 1.5s ease-in-out;
+    animation: fadeIn 1.5s ease-out;
 }
 
 .hero .btn {
-    animation: fadeIn 1.8s ease-in-out;
+    animation: fadeIn 1.8s ease-out;
 }
 
 
 /* ==================================================
-   7. PAGE HEADER
+   8. PAGE HEADER
 ================================================== */
 
 .pagehead {
-    background: var(--navy);
-    color: var(--white);
-    padding: 44px 5%;
-    border-bottom: 6px solid var(--gold);
+    background: var(--charcoal);
+    color: var(--paper);
+    padding: 64px 5% 56px;
+    border-bottom: 4px solid var(--terracotta);
 }
 
 .pagehead h1 {
-    font-family: Georgia, serif;
-    margin-bottom: 6px;
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-family: var(--font-wordmark);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 5vw, 3.4rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
 .pagehead p {
-    color: #d6d9f2;
+    font-family: var(--font-quote);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: rgba(245, 243, 239, 0.75);
+    max-width: 700px;
 }
 
 
 /* ==================================================
-   8. BUTTONS
+   9. BUTTONS
 ================================================== */
 
 .btn {
     display: inline-block;
-    background: var(--gold);
-    color: var(--navy);
+    background: var(--terracotta);
+    color: var(--paper);
 
-    padding: 12px 26px;
+    padding: 13px 28px;
     margin-top: 12px;
 
-    font-weight: 700;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     text-decoration: none;
-    border-radius: 4px;
+    border: 1px solid var(--terracotta);
+    border-radius: var(--radius);
 
-    transition: all 0.3s ease;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .btn:hover {
-    background: var(--white);
-    color: var(--navy);
-    transform: translateY(-4px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    background: var(--paper);
+    color: var(--charcoal);
+    border-color: var(--paper);
+}
+
+/* Optional second button: add class="btn ghost" */
+.btn.ghost {
+    background: transparent;
+    color: var(--paper);
+    border-color: rgba(245, 243, 239, 0.5);
+}
+
+.btn.ghost:hover {
+    background: var(--paper);
+    color: var(--charcoal);
+    border-color: var(--paper);
 }
 
 
 /* ==================================================
-   9. MAIN CONTENT
+   10. MAIN CONTENT
 ================================================== */
 
 main {
     width: 100%;
     max-width: 1250px;
     margin: auto;
-    padding: 45px 5%;
+    padding: 64px 5%;
 }
 
 h2 {
-    color: var(--blue);
-    border-left: 6px solid var(--gold);
-    padding-left: 12px;
-    margin-top: 2rem;
-    margin-bottom: 15px;
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+
+    margin-top: 3rem;
+    margin-bottom: 18px;
+    padding-top: 18px;
+    border-top: 2px solid var(--charcoal);
+}
+
+main > h2:first-child {
+    margin-top: 0;
 }
 
 h3 {
-    color: var(--navy);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    color: var(--charcoal);
+}
+
+main p {
+    max-width: 75ch;
+    margin-bottom: 1em;
 }
 
 
 /* ==================================================
-   10. GRID LAYOUT
+   11. GRID LAYOUT
 ================================================== */
 
 .grid {
     display: grid;
-
     grid-template-columns: repeat(4, minmax(0, 1fr));
-
-    gap: 22px;
-    margin: 25px 0;
+    gap: 28px;
+    margin: 30px 0;
     align-items: stretch;
 }
 
 
 /* ==================================================
-   11. TOURISM CARDS
+   12. TOURISM CARDS
+   Quiet cards: photo, hairline border, no heavy shadow
 ================================================== */
 
 .card {
     min-width: 0;
 
-    border: 1px solid var(--line);
-    border-top: 4px solid var(--gold);
-
     background: var(--white);
-    border-radius: 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
     overflow: hidden;
 
     display: flex;
     flex-direction: column;
 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 8px 20px rgba(27,34,96,0.2);
-    transform: translateY(-5px);
+    border-color: var(--terracotta);
 }
 
 .card img {
     width: 100%;
-    height: 220px;
+    height: 230px;
 
-    display: block;
     object-fit: cover;
     object-position: center;
 
-    transition: transform 0.5s ease;
+    transition: transform 0.7s ease;
 }
 
 .card:hover img {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
 .card div {
-    padding: 18px;
+    padding: 20px;
     flex: 1;
 }
 
 .card h3 {
     margin: 0 0 10px;
+    transition: color 0.25s ease;
+}
+
+.card:hover h3 {
+    color: var(--terracotta);
 }
 
 .card p {
+    font-size: 0.95rem;
     line-height: 1.6;
+    color: var(--muted);
 }
 
 
 /* ==================================================
-   12. FIGURES AND IMAGES
+   13. FIGURES AND IMAGES
 ================================================== */
 
 figure {
     width: 100%;
-    margin: 20px 0;
+    margin: 28px 0;
 }
 
 figure img {
     width: 100%;
-    max-width: 100%;
-    max-height: 500px;
+    max-height: 520px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: var(--radius);
 }
 
 figcaption {
-    font-size: 0.88rem;
-    color: var(--gray);
-    margin-top: 6px;
+    font-family: var(--font-quote);
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin-top: 8px;
 }
 
 
 /* ==================================================
-   13. IMAGE GALLERY
+   14. IMAGE GALLERY
 ================================================== */
 
 .gallery {
@@ -431,14 +540,14 @@ figcaption {
 
 .gallery img {
     width: 100%;
-    height: 240px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: var(--radius);
 }
 
 
 /* ==================================================
-   14. TABLES
+   15. TABLES
 ================================================== */
 
 .table-container {
@@ -451,84 +560,94 @@ table {
     width: 100%;
     min-width: 550px;
     border-collapse: collapse;
-    margin: 18px 0;
+    margin: 20px 0;
     font-size: 0.95rem;
 }
 
 th {
-    background: var(--blue);
-    color: var(--white);
+    background: var(--charcoal);
+    color: var(--paper);
     text-align: left;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 th, td {
-    padding: 10px 12px;
+    padding: 12px 14px;
     border: 1px solid var(--line);
 }
 
 tbody tr:nth-child(even) {
-    background: var(--soft);
+    background: var(--paper-deep);
 }
 
 tbody tr:hover {
-    background: #fff7c2;
+    background: rgba(194, 65, 12, 0.1);
 }
 
 
 /* ==================================================
-   15. NOTE BOX
+   16. NOTE BOX
+   Reads like a pull quote
 ================================================== */
 
 .note {
-    background: var(--soft);
-    border-left: 6px solid var(--blue);
-    padding: 12px 18px;
-    margin: 20px 0;
+    background: transparent;
+    border-left: 3px solid var(--terracotta);
+    padding: 6px 0 6px 22px;
+    margin: 28px 0;
+
+    font-family: var(--font-quote);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.6;
 }
 
 
 /* ==================================================
-   16. FOOTER
+   17. FOOTER
 ================================================== */
 
 footer {
     width: 100%;
-    background: var(--navy);
-    color: #cfd2ee;
+    background: var(--charcoal);
+    color: rgba(245, 243, 239, 0.7);
 
-    padding: 30px 5%;
-    margin-top: 40px;
+    padding: 48px 5%;
+    margin-top: 60px;
 
-    border-top: 6px solid var(--gold);
     text-align: center;
     font-size: 0.9rem;
 }
 
 footer a {
-    color: var(--gold);
+    color: var(--amber);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--paper);
+    text-decoration: underline;
 }
 
 
 /* ==================================================
-   17. ANIMATIONS
+   18. ANIMATIONS
 ================================================== */
 
 @keyframes pageLoad {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(25px);
+        transform: translateY(18px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -537,7 +656,7 @@ footer a {
 
 
 /* ==================================================
-   18. LARGE DESKTOP SCREENS
+   19. LARGE DESKTOP SCREENS
    1400px and above
 ================================================== */
 
@@ -552,18 +671,14 @@ footer a {
     }
 
     .hero {
-        min-height: 560px;
+        min-height: 85vh;
         padding-left: max(8%, calc((100vw - 1350px) / 2));
-    }
-
-    .grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 
 
 /* ==================================================
-   19. LAPTOP SCREENS
+   20. LAPTOP SCREENS
    1001px - 1399px
 ================================================== */
 
@@ -574,8 +689,14 @@ footer a {
     }
 
     nav a.n {
-        padding: 14px 10px;
-        font-size: 13px;
+        padding: 18px 10px;
+        font-size: 12px;
+    }
+
+    nav a.n::after {
+        left: 10px;
+        right: 10px;
+        bottom: 12px;
     }
 
     main {
@@ -589,7 +710,7 @@ footer a {
 
 
 /* ==================================================
-   20. TABLETS
+   21. TABLETS
    601px - 1000px
 ================================================== */
 
@@ -603,11 +724,7 @@ footer a {
         flex-direction: column;
         justify-content: center;
         padding: 10px 3%;
-        gap: 5px;
-    }
-
-    .brand {
-        font-size: 1.5rem;
+        gap: 0;
     }
 
     nav ul {
@@ -615,36 +732,34 @@ footer a {
     }
 
     nav a.n {
-        padding: 11px 10px;
-        font-size: 13px;
+        padding: 12px 10px;
+        font-size: 12px;
     }
 
-    nav .sub {
-        position: absolute;
-        top: 100%;
+    nav a.n::after {
+        left: 10px;
+        right: 10px;
+        bottom: 6px;
     }
 
     .hero {
-        min-height: 400px;
-        padding: 60px 6%;
+        min-height: 460px;
+        padding: 60px 6% 70px;
     }
 
-    .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
+    .grid,
     .gallery {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     main {
-        padding: 35px 4%;
+        padding: 48px 4%;
     }
 }
 
 
 /* ==================================================
-   21. MOBILE PHONES
+   22. MOBILE PHONES
    381px - 600px
 ================================================== */
 
@@ -661,12 +776,13 @@ footer a {
 
     .bar {
         flex-direction: column;
-        padding: 10px 3%;
-        gap: 5px;
+        padding: 8px 3%;
+        gap: 0;
     }
 
     .brand {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
+        padding: 10px 0 4px;
     }
 
     nav {
@@ -679,22 +795,24 @@ footer a {
     }
 
     nav a.n {
-        padding: 9px 8px;
-        font-size: 12px;
+        padding: 10px 8px;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+    }
+
+    nav a.n::after {
+        left: 8px;
+        right: 8px;
+        bottom: 4px;
     }
 
     nav .sub {
-        position: absolute;
         min-width: 200px;
     }
 
     .hero {
-        min-height: 350px;
-        padding: 45px 6%;
-    }
-
-    .hero h1 {
-        font-size: 2.2rem;
+        min-height: 400px;
+        padding: 45px 6% 55px;
     }
 
     .hero p {
@@ -702,25 +820,21 @@ footer a {
     }
 
     main {
-        padding: 25px 5%;
+        padding: 36px 5%;
     }
 
-    .grid {
+    .grid,
+    .gallery {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 14px;
     }
 
     .card img {
-        height: 180px;
+        height: 170px;
     }
 
     .card div {
-        padding: 13px;
-    }
-
-    .gallery {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+        padding: 14px;
     }
 
     .gallery img {
@@ -728,17 +842,13 @@ footer a {
     }
 
     .pagehead {
-        padding: 30px 5%;
-    }
-
-    .pagehead h1 {
-        font-size: 1.8rem;
+        padding: 40px 5% 34px;
     }
 }
 
 
 /* ==================================================
-   22. SMALL MOBILE PHONES
+   23. SMALL MOBILE PHONES
    380px and below
 ================================================== */
 
@@ -756,12 +866,13 @@ footer a {
 
     .bar {
         flex-direction: column;
-        padding: 10px 2%;
-        gap: 5px;
+        padding: 8px 2%;
+        gap: 0;
     }
 
     .brand {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+        padding: 10px 0 4px;
     }
 
     nav {
@@ -773,22 +884,24 @@ footer a {
     }
 
     nav a.n {
-        padding: 8px 6px;
-        font-size: 11px;
+        padding: 9px 6px;
+        font-size: 10px;
+        letter-spacing: 0.06em;
+    }
+
+    nav a.n::after {
+        left: 6px;
+        right: 6px;
+        bottom: 3px;
     }
 
     nav .sub {
-        position: absolute;
         min-width: 180px;
     }
 
     .hero {
-        min-height: 320px;
-        padding: 35px 5%;
-    }
-
-    .hero h1 {
-        font-size: 1.8rem;
+        min-height: 360px;
+        padding: 35px 5% 45px;
     }
 
     .hero p {
@@ -796,12 +909,12 @@ footer a {
     }
 
     .btn {
-        padding: 10px 18px;
-        font-size: 13px;
+        padding: 11px 18px;
+        font-size: 12px;
     }
 
     main {
-        padding: 22px 4%;
+        padding: 30px 4%;
     }
 
     .grid,
@@ -817,15 +930,11 @@ footer a {
     .gallery img {
         height: 220px;
     }
-
-    .pagehead h1 {
-        font-size: 1.6rem;
-    }
 }
 
 
 /* ==================================================
-   23. ACCESSIBILITY
+   24. ACCESSIBILITY
 ================================================== */
 
 @media (prefers-reduced-motion: reduce) {
